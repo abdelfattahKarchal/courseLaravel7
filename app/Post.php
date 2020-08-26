@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\AdminShowDeleteScope;
 use App\Scopes\LatestScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +33,10 @@ class Post extends Model
      * @return void
      */
     public static function boot(){
+        //apply Global scope for showing the trashet posts for admin
+        static::addGlobalScope(new AdminShowDeleteScope);
         parent::boot();
+
 
         //apply scope for all posts queries (Global Scope)
         static::addGlobalScope(new LatestScope);
