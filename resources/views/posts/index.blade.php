@@ -19,7 +19,16 @@
     @forelse ($posts as $post)
     <li class="list-group-item">
         <h2>
-            <a href=" {{route('posts.show',['post'=>$post->id])}} ">{{$post->title}}</a></h2>
+            <a href=" {{route('posts.show',['post'=>$post->id])}} ">
+                @if($post->trashed())
+                <del>
+                    {{$post->title}}
+                </del>
+                @else
+                {{$post->title}}
+                @endif
+            </a>
+            </h2>
             {{-- <em> {{$post->created_at}} </em> --}}
             @if($post->comments_count)
             <div>
@@ -57,8 +66,8 @@
                         <button class="btn btn-success"  type="submit">Restore !</button>
                     </form>
                 @endcan
-                @can('forcedelete', $post)
-                    <form class="" method="POST" action="{{url('/posts/'.$post->id.'/forcedelete')}}">
+                @can('forceDelete', $post)
+                    <form class="form-inline" method="POST" action="{{url('/posts/'.$post->id.'/forcedelete')}}">
                         @csrf
                         {{-- PATCH pour faire une modification partiel --}}
                         @method('DELETE')
