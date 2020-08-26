@@ -48,4 +48,16 @@ class User extends Authenticatable
     public function scopeMostUsersActive(Builder $query){
         return $query->withCount('posts')->orderBy('posts_count','desc');
     }
+
+
+    /**
+     * fonction permet de retourner les utilisateurs qui ont posté le dernier mois
+     */
+    public function scopeMostUsersActiveInLastMonth(Builder $query){
+        return $query->withCount(['posts'=>function(Builder $query){
+            return $query->whereBetween(static::CREATED_AT,[now()->subMonth(1),now()]);
+        }])
+        ->having('posts_count','>=',3)
+        ->orderBy('posts_count','desc');
+    }
 }

@@ -26,6 +26,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        //dd(now());
         /**
          * berchmarcking
          */
@@ -46,6 +47,7 @@ class PostController extends Controller
             'posts'=> $posts,
             'mostCommented'=> Post::mostCommented()->take(5)->get(),
             'mostUsersActive'=> User::mostUsersActive()->take(5)->get(),
+            'mostUsersActiveInLastMonth'=> User::mostUsersActiveInLastMonth()->take(5)->get(),
             'tab' =>'list'
         ]);
     }
