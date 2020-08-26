@@ -6,11 +6,11 @@
     <div class="col-8">
         <h1>List of posts</h1>
 
-<nav class="nav nav-tabs nav-stacked my-5">
+{{-- <nav class="nav nav-tabs nav-stacked my-5">
     <a class="nav-link @if($tab=='list') active @endif" href="/posts">List</a>
     <a class="nav-link @if($tab=='archive') active @endif" href="/posts/archive">Archive</a>
     <a class="nav-link @if($tab=='all') active @endif" href="/posts/all">All</a>
-</nav>
+</nav> --}}
 <div class="my-3">
     <h4>{{ $posts->count() }} post(s)</h4>
 </div>
@@ -18,6 +18,17 @@
 <ul class="list-group-item">
     @forelse ($posts as $post)
     <li class="list-group-item">
+        @if($post->created_at->diffInHours() < 1)
+        {{-- par defaut si on passe pas un paramèttre (tableau) sur componnent par defaut prendre la valeur success
+        sur la vue bade.blade.php --}}
+            @component('partials.badge')
+                new
+            @endcomponent
+        @else
+            @component('partials.badge',['type'=>'dark'])
+                old
+            @endcomponent
+        @endif
         <h2>
             <a href=" {{route('posts.show',['post'=>$post->id])}} ">
                 @if($post->trashed())
@@ -32,11 +43,15 @@
             {{-- <em> {{$post->created_at}} </em> --}}
             @if($post->comments_count)
             <div>
-                <span class="badge-success">{{$post->comments_count}} comments</span>
+                @component('partials.badge')
+                    {{$post->comments_count}} comments
+                @endcomponent
             </div>
             @else
             <div>
-                <span class="badge-dark">no comments yet</span>
+                @component('partials.badge',['type'=>'dark'])
+                    no comments yet
+                @endcomponent
             </div>
             @endif
              <p class="text-muted">
@@ -47,7 +62,10 @@
              @endcan
 
              @cannot('delete', $post)
-                <span class="badge badge-danger">You can't delete this post</span>
+                @component('partials.badge',['type' => 'danger'])
+                    You can't delete this post
+                @endcomponent
+                {{-- <span class="badge badge-danger"> You can't delete this post</span> --}}
              @endcannot
             @if (!$post->deleted_at)
                 @can('delete', $post)
@@ -80,7 +98,10 @@
 
         </li>
     @empty
-        <span class="badge-danger">Not post</span>
+    @component('partials.badge',['type'=>'danger'])
+        Not post
+    @endcomponent
+        {{-- <span class="badge-danger"></span> --}}
     @endforelse
 
 </ul>
@@ -95,9 +116,12 @@
                      <li class="list-group-item">
                      <a href="{{ route('posts.show',['post'=>$post->id]) }}">{{$post->title}}</a>
                         <p>
-                            <span class="badge badge-success">
+                            @component('partials.badge',['type'=>'success'])
                                 {{$post->comments_count}}
-                            </span>
+                            @endcomponent
+                            {{-- <span class="badge badge-success">
+                                {{$post->comments_count}}
+                            </span> --}}
                         </p>
                     </li>
                 @endforeach ($posts as $post)
@@ -112,7 +136,10 @@
             <ul class="list-group list-group-flush">
                 @foreach ($mostUsersActive as $user)
                     <li class="list-group-item">
-                        <span class="badge badge-info"> {{$user->posts_count}} </span>
+                        @component('partials.badge',['type'=>'info'])
+                            {{$user->posts_count}}
+                        @endcomponent
+                        {{-- <span class="badge badge-info"> {{$user->posts_count}} </span> --}}
                         {{ $user->name }}
                     </li>
                 @endforeach ($mostUsersActive as $user)
@@ -127,7 +154,10 @@
             <ul class="list-group list-group-flush">
                 @foreach ($mostUsersActiveInLastMonth as $user)
                     <li class="list-group-item">
-                        <span class="badge badge-info"> {{$user->posts_count}} </span>
+                        @component('partials.badge',['type'=>'info'])
+                            {{$user->posts_count}}
+                        @endcomponent
+                        {{-- <span class="badge badge-info"> {{$user->posts_count}} </span> --}}
                         {{ $user->name }}
                     </li>
                 @endforeach ($mostUsersActive as $user)
