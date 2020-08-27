@@ -70,9 +70,14 @@
                 </x-badge>
             </div>
             @endif
-             <p class="text-muted">
+             {{-- <p class="text-muted">
                  {{$post->updated_at->diffForHumans()}}, by {{$post->user->name}}
-             </p>
+             </p> --}}
+
+             {{-- utilisation du component (updated) dynamique et pour le faire on prééde par les attributs(date,name) par (:)
+             pour qu on puisse savoire que c'est une variable --}}
+             <x-updated :date="$post->created_at" :name="$post->user->name"></x-updated>
+             <x-updated :date="$post->updated_at">Updated</x-updated>
              @can('update', $post)
                 <a class="btn btn-warning" href="{{route('posts.edit',['post'=>$post->id])}}">Edit</a>
              @endcan
