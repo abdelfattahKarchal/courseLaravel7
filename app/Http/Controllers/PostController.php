@@ -110,8 +110,15 @@ class PostController extends Controller
      */
     public function show($id)
     {
+        /**
+         * definition du key dynamique pour qu on puisse le récupérer depuis le model lors de updating
+         */
+        $postShow = Cache::remember("post-show-{$id}", 60, function () use ($id) {
+            return Post::withCount('comments')->find($id);
+        });
+
         return view('posts.show',[
-            'post'=> Post::withCount('comments')->find($id)
+            'post'=> $postShow
         ]);
     }
 
