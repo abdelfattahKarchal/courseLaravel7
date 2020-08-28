@@ -7,6 +7,7 @@ use App\Post;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -43,11 +44,26 @@ class PostController extends Controller
        // $posts = Post::withCount('comments')->orderBy('updated_at','desc')->get();
        // scoped by orderBy
         $posts = Post::withCount('comments')->with('user')->get();
+
+        /**
+         * gestion de cahe pour les posts les plus commentés
+         * la 1er execution de la page on va récupérer les données depuis la base de données
+         * et si en refreche la pas dans moins de 10 seconde on va récupérer les données juste de puis le cache
+         */
+        $mostCommented = Cache::remember('mostCommented', now()->addSeconds(10), function () {
+            return Post::mostCommented()->take(5)->get();
+        });
+        $mostUsersActive = Cache::remember('mostUsersActive', now()->addSeconds(10), function () {
+            return User::mostUsersActive()->take(5)->get();
+        });
+        $mostUsersActiveInLastMonth = Cache::remember('mostUsersActiveInLastMonth', now()->addSeconds(10), function () {
+            return User::mostUsersActiveInLastMonth()->take(5)->get();
+        });
         return view('posts.index',[
             'posts'=> $posts,
-            'mostCommented'=> Post::mostCommented()->take(5)->get(),
-            'mostUsersActive'=> User::mostUsersActive()->take(5)->get(),
-            'mostUsersActiveInLastMonth'=> User::mostUsersActiveInLastMonth()->take(5)->get(),
+            'mostCommented'=> $mostCommented,
+            'mostUsersActive'=> $mostUsersActive,
+            'mostUsersActiveInLastMonth'=> $mostUsersActiveInLastMonth,
             'tab' =>'list'
         ]);
     }
