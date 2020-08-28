@@ -78,47 +78,48 @@
              pour qu on puisse savoire que c'est une variable --}}
              <x-updated :date="$post->created_at" :name="$post->user->name"></x-updated>
              <x-updated :date="$post->updated_at">Updated</x-updated>
-             @can('update', $post)
-                <a class="btn btn-warning" href="{{route('posts.edit',['post'=>$post->id])}}">Edit</a>
-             @endcan
-
-             @cannot('delete', $post)
-             {{-- <span class="badge badge-danger"> You can't delete this post</span> --}}
-                {{-- @component('partials.badge',['type' => 'danger'])
-                    You can't delete this post
-                @endcomponent --}}
-                <x-badge type="danger">
-                    You can't delete this post
-                </x-badge>
-             @endcannot
-            @if (!$post->deleted_at)
-                @can('delete', $post)
-                    <form class="form-inline" method="POST" action="{{route('posts.destroy',['post'=>$post->id])}}">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger"  type="submit">Delete</button>
-                    </form>
-                @endcan
-            @else
-                @can('restore', $post)
-                    <form class="form-inline" method="POST" action="{{url('/posts/'.$post->id.'/restore')}}">
-                        @csrf
-                        {{-- PATCH pour faire une modification partiel --}}
-                        @method('PATCH')
-                        <button class="btn btn-success"  type="submit">Restore !</button>
-                    </form>
-                @endcan
-                @can('forceDelete', $post)
-                    <form class="form-inline" method="POST" action="{{url('/posts/'.$post->id.'/forcedelete')}}">
-                        @csrf
-                        {{-- PATCH pour faire une modification partiel --}}
-                        @method('DELETE')
-                        <button class="btn btn-danger"  type="submit">Force delete !</button>
-                    </form>
+             @auth
+                @can('update', $post)
+                    <a class="btn btn-warning" href="{{route('posts.edit',['post'=>$post->id])}}">Edit</a>
                 @endcan
 
-            @endif
+                @cannot('delete', $post)
+                {{-- <span class="badge badge-danger"> You can't delete this post</span> --}}
+                    {{-- @component('partials.badge',['type' => 'danger'])
+                        You can't delete this post
+                    @endcomponent --}}
+                    <x-badge type="danger">
+                        You can't delete this post
+                    </x-badge>
+                @endcannot
+                @if (!$post->deleted_at)
+                    @can('delete', $post)
+                        <form class="form-inline" method="POST" action="{{route('posts.destroy',['post'=>$post->id])}}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger"  type="submit">Delete</button>
+                        </form>
+                    @endcan
+                @else
+                    @can('restore', $post)
+                        <form class="form-inline" method="POST" action="{{url('/posts/'.$post->id.'/restore')}}">
+                            @csrf
+                            {{-- PATCH pour faire une modification partiel --}}
+                            @method('PATCH')
+                            <button class="btn btn-success"  type="submit">Restore !</button>
+                        </form>
+                    @endcan
+                    @can('forceDelete', $post)
+                        <form class="form-inline" method="POST" action="{{url('/posts/'.$post->id.'/forcedelete')}}">
+                            @csrf
+                            {{-- PATCH pour faire une modification partiel --}}
+                            @method('DELETE')
+                            <button class="btn btn-danger"  type="submit">Force delete !</button>
+                        </form>
+                    @endcan
 
+                @endif
+            @endauth
 
         </li>
     @empty

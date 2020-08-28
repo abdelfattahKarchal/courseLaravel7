@@ -42,7 +42,7 @@ class PostController extends Controller
 
        // $posts = Post::withCount('comments')->orderBy('updated_at','desc')->get();
        // scoped by orderBy
-        $posts = Post::withCount('comments')->get();
+        $posts = Post::withCount('comments')->with('user')->get();
         return view('posts.index',[
             'posts'=> $posts,
             'mostCommented'=> Post::mostCommented()->take(5)->get(),
