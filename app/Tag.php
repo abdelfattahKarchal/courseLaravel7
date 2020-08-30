@@ -10,6 +10,6 @@ class Tag extends Model
      * Many To Many relation with Post Model
      */
     public function posts(){
-        return $this->belongsToMany('App\Post');
+        return $this->belongsToMany('App\Post')->withTimestamps();
     }
 }
