@@ -4,6 +4,9 @@
 
 <h1>{{$post->title}}</h1>
 <p>{{$post->content}}</p>
+
+<x-tags :tags="$post->tags"></x-tags>
+
 <em> Added {{$post->created_at->diffForHumans()}} </em>
 
 @if ((new Carbon\Carbon())->diffInMinutes($post->created_at) < 5)

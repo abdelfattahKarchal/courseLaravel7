@@ -48,7 +48,8 @@
                 {{$post->title}}
                 @endif
             </a>
-            </h2>
+        </h2>
+        <x-tags :tags="$post->tags"></x-tags>
             {{-- <em> {{$post->created_at}} </em> --}}
             @if($post->comments_count)
             <div>
