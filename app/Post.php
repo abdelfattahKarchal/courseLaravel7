@@ -64,4 +64,11 @@ class Post extends Model
         return $query->withCount('comments')->orderBy('comments_count','desc');
     }
 
+    /**
+     * Many To Many relation with Tag Model
+     */
+    public function tags(){
+        return $this->belongsToMany('App\Tag');
+    }
+
 }
