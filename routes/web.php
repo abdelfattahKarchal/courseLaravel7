@@ -34,6 +34,8 @@ Route::patch('/posts/{id}/restore','PostController@restore');
 Route::delete('/posts/{id}/forcedelete','PostController@forcedelete');
 Route::resource('posts', 'PostController')->only(['index','show','create','store','edit','update','destroy']);
 
+Route::get('posts/tag/{id}', 'PostTagController@index')->name('posts.tag.index');
+
 /*Route::get('/about', function () {
     return view('about');
 });*/

@@ -7,6 +7,7 @@
     @if (!empty(trim($slot)))
         {{$slot}}
     @else
+    @if (!@empty($items))
         @foreach ($items as $item)
             <li class="list-group-item">
 
@@ -18,6 +19,8 @@
                 {{ $item->name }}
             </li>
         @endforeach ($items as $item)
+    @endif
+
     @endif
 
 
