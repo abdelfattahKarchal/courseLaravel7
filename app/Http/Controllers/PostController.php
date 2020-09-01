@@ -43,7 +43,7 @@ class PostController extends Controller
 
        // $posts = Post::withCount('comments')->orderBy('updated_at','desc')->get();
        // scoped by orderBy
-        $posts = Post::withCount('comments')->with('user')->get();
+        $posts = Post::withCount('comments')->with(['user','tags'])->get();
 
         /**
          * gestion de cahe pour les posts les plus commentés
@@ -114,7 +114,7 @@ class PostController extends Controller
          * definition du key dynamique pour qu on puisse le récupérer depuis le model lors de updating
          */
         $postShow = Cache::remember("post-show-{$id}", 60, function () use ($id) {
-            return Post::withCount('comments')->find($id);
+            return Post::withCount(['comments','tags'])->find($id);
         });
 
         return view('posts.show',[
