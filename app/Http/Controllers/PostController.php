@@ -50,7 +50,14 @@ class PostController extends Controller
          * la 1er execution de la page on va récupérer les données depuis la base de données
          * et si en refreche la pas dans moins de 10 seconde on va récupérer les données juste de puis le cache
          */
-        $mostCommented = Cache::remember('mostCommented', now()->addSeconds(10), function () {
+
+
+/**
+ * ces variables j ai les externalisé dons une class ActivityComposer afin que je puisse les injectés
+ * automatiquement lors de lancement des vue spécifique sur le fichier Providers/AppServiceProvider.php
+ */
+
+        /* $mostCommented = Cache::remember('mostCommented', now()->addSeconds(10), function () {
             return Post::mostCommented()->take(5)->get();
         });
         $mostUsersActive = Cache::remember('mostUsersActive', now()->addSeconds(10), function () {
@@ -58,12 +65,12 @@ class PostController extends Controller
         });
         $mostUsersActiveInLastMonth = Cache::remember('mostUsersActiveInLastMonth', now()->addSeconds(10), function () {
             return User::mostUsersActiveInLastMonth()->take(5)->get();
-        });
+        }); */
         return view('posts.index',[
             'posts'=> $posts,
-            'mostCommented'=> $mostCommented,
+           /*  'mostCommented'=> $mostCommented,
             'mostUsersActive'=> $mostUsersActive,
-            'mostUsersActiveInLastMonth'=> $mostUsersActiveInLastMonth,
+            'mostUsersActiveInLastMonth'=> $mostUsersActiveInLastMonth, */
             'tab' =>'list'
         ]);
     }

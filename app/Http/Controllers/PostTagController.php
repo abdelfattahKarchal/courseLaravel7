@@ -12,12 +12,16 @@ class PostTagController extends Controller
 
     public function index($id)
     {
+        /**
+        * injection automatique des variables () dans les vues specifiées sur le fichier Providers/AppServiceProvider.php
+        * à laide de la notion de view Composer
+        */
         $tag = Tag::find($id);
         return view('posts.index',[
             'posts' => $tag->posts,
-            'mostCommented'=> [],
+           /*  'mostCommented'=> [],
             'mostUsersActive'=> [],
-            'mostUsersActiveInLastMonth'=> [],
+            'mostUsersActiveInLastMonth'=> [], */
         ]);
     }
 }
