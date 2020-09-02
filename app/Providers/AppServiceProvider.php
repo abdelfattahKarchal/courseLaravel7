@@ -28,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
          * j injecte des variables qui se trouvent sur la class qu on a crée (ActivityComposer) et précisement
          * dans la méthode (compose) sur la vue mentionée (posts.index)
          */
-        view()->composer(['posts.index','posts.show'],ActivityComposer::class);
+        //view()->composer(['posts.index','posts.show'],ActivityComposer::class);
+        view()->composer(['posts.sidebar'],ActivityComposer::class);
+        /**
+         * pour injecter le code sur toutes les vues de l application
+         */
+        //view()->composer('*',ActivityComposer::class);
     }
 }
