@@ -75,7 +75,7 @@
                  {{$post->updated_at->diffForHumans()}}, by {{$post->user->name}}
              </p> --}}
 
-             {{-- utilisation du component (updated) dynamique et pour le faire on prééde par les attributs(date,name) par (:)
+             {{-- utilisation du component (updated) dynamique et pour le faire on précéde les attributs(date,name) par (:)
              pour qu on puisse savoire que c'est une variable --}}
              <x-updated :date="$post->created_at" :name="$post->user->name"></x-updated>
              <x-updated :date="$post->updated_at">Updated</x-updated>
