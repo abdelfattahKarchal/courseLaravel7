@@ -60,4 +60,8 @@ class User extends Authenticatable
         ->having('posts_count','>=',3)
         ->orderBy('posts_count','desc');
     }
+
+    public function comments(){
+        return $this->hasMany('App\Comment');
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 
 class CommentsTableSeeder extends Seeder
@@ -12,6 +13,7 @@ class CommentsTableSeeder extends Seeder
     public function run()
     {
         $posts = App\Post::all();
+        $users = User::all();
 
         if ($posts->count()==0) {
             $this->command->info("Please create some post in your posts table");
@@ -20,8 +22,9 @@ class CommentsTableSeeder extends Seeder
         // ask user how many of post want to generat in comments table
         $nbComments = (int) $this->command->ask("How many of comment you want to generat ?",1000);
 
-        factory(App\Comment::class,2000)->make()->each(function($comment) use($posts){
+        factory(App\Comment::class,2000)->make()->each(function($comment) use($posts,$users){
             $comment->post_id = $posts->random()->id;
+            $comment->user_id = $users->random()->id;
             $comment->save();
         });
     }

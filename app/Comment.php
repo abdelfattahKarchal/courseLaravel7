@@ -5,6 +5,7 @@ namespace App;
 use App\Scopes\LatestScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
@@ -24,6 +25,9 @@ class Comment extends Model
 
         //apply scope for all posts queries
       //  static::addGlobalScope(new LatestScope);
+    }
 
+    public function user(){
+        return $this->BelongsTo('App\User');
     }
 }
