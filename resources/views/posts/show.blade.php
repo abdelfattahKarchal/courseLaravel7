@@ -22,7 +22,8 @@
                 {{$comment->content}}
             </p>
             <p class="text-muted">
-                {{ $comment->created_at->diffForHumans() }}
+                <x-updated :date="$comment->created_at" :name="$comment->user->name"></x-updated>
+                {{-- {{ $comment->created_at->diffForHumans() }} --}}
             </p>
         @empty
         <div>
