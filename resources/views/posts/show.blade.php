@@ -21,6 +21,9 @@
             <p>
                 {{$comment->content}}
             </p>
+             {{-- add comment --}}
+            @include('comments.form')
+            {{-- end adding comment --}}
             <p class="text-muted">
                 <x-updated :date="$comment->created_at" :name="$comment->user->name"></x-updated>
                 {{-- {{ $comment->created_at->diffForHumans() }} --}}
