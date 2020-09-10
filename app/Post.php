@@ -42,13 +42,13 @@ class Post extends Model
         //apply scope for all posts queries (Global Scope)
         static::addGlobalScope(new LatestScope);
 
-        static::deleting(function($post){
+        static::deleting(function(Post $post){
             $post->comments()->delete();
         });
-        static::updating(function($post){
+        static::updating(function(Post $post){
             Cache::forget("post-show-{$post->id}");
         });
-        static::restoring(function($post){
+        static::restoring(function(Post $post){
             $post->comments()->restore();
         });
 

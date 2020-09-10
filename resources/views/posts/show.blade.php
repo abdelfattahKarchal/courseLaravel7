@@ -15,15 +15,16 @@
             <strong> New!</strong>
         @endif
 
-        <h3>Comments :</h3>
-
+        <h4>Comments :</h4>
+        {{-- add comment --}}
+        @include('comments.form', ['id'=>$post->id])
+        {{-- end adding comment --}}
+        <hr>
         @forelse ($post->comments as $comment)
             <p>
                 {{$comment->content}}
             </p>
-             {{-- add comment --}}
-            @include('comments.form')
-            {{-- end adding comment --}}
+
             <p class="text-muted">
                 <x-updated :date="$comment->created_at" :name="$comment->user->name"></x-updated>
                 {{-- {{ $comment->created_at->diffForHumans() }} --}}
