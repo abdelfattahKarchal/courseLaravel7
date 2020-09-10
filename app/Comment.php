@@ -18,7 +18,9 @@ class Comment extends Model
     public function post(){
         return $this->belongsTo('App\Post');
     }
-
+    public function user(){
+        return $this->BelongsTo('App\User');
+    }
     // local scope doit être prefixer par le mot scope
     public function scopeDernier(Builder $query){
         $query->orderBy(static::UPDATED_AT,'desc');
@@ -35,7 +37,5 @@ class Comment extends Model
       //  static::addGlobalScope(new LatestScope);
     }
 
-    public function user(){
-        return $this->BelongsTo('App\User');
-    }
+
 }
