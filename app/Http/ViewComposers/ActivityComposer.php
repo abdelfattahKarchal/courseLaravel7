@@ -14,13 +14,13 @@ use Illuminate\View\View;
 class ActivityComposer{
 
     public function compose(View $view){
-        $mostCommented = Cache::remember('mostCommented', now()->addSeconds(10), function () {
+        $mostCommented = Cache::remember('mostCommented', now()->addMinutes(10), function () {
             return Post::mostCommented()->take(5)->get();
         });
-        $mostUsersActive = Cache::remember('mostUsersActive', now()->addSeconds(10), function () {
+        $mostUsersActive = Cache::remember('mostUsersActive', now()->addMinutes(10), function () {
             return User::mostUsersActive()->take(5)->get();
         });
-        $mostUsersActiveInLastMonth = Cache::remember('mostUsersActiveInLastMonth', now()->addSeconds(10), function () {
+        $mostUsersActiveInLastMonth = Cache::remember('mostUsersActiveInLastMonth', now()->addMinutes(10), function () {
             return User::mostUsersActiveInLastMonth()->take(5)->get();
         });
 

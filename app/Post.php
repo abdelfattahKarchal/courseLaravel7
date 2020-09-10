@@ -63,6 +63,9 @@ class Post extends Model
         // contient le nombre de posts retournés
         return $query->withCount('comments')->orderBy('comments_count','desc');
     }
+    public function scopePostWithCommentsTags(Builder $query){
+        $query->withCount('comments')->with(['user','tags']);
+    }
 
     /**
      * Many To Many relation with Tag Model
