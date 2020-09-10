@@ -36,6 +36,8 @@ Route::resource('posts', 'PostController')->only(['index','show','create','store
 
 Route::get('posts/tag/{id}', 'PostTagController@index')->name('posts.tag.index');
 
+Route::resource('posts.comments', 'PostCommentController')->only(['store']);
+
 /*Route::get('/about', function () {
     return view('about');
 });*/

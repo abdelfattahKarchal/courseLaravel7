@@ -84,7 +84,7 @@
              <x-updated :date="$post->updated_at">Updated</x-updated>
              @auth
                 @can('update', $post)
-                    <a class="btn btn-warning" href="{{route('posts.edit',['post'=>$post->id])}}">Edit</a>
+                    <a class="btn btn-warning btn-sm" href="{{route('posts.edit',['post'=>$post->id])}}">Edit</a>
                 @endcan
 
                 @cannot('delete', $post)
@@ -101,7 +101,7 @@
                         <form class="form-inline" method="POST" action="{{route('posts.destroy',['post'=>$post->id])}}">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger"  type="submit">Delete</button>
+                            <button class="btn btn-danger btn-sm"  type="submit">Delete</button>
                         </form>
                     @endcan
                 @else
@@ -110,7 +110,7 @@
                             @csrf
                             {{-- PATCH pour faire une modification partiel --}}
                             @method('PATCH')
-                            <button class="btn btn-success"  type="submit">Restore !</button>
+                            <button class="btn btn-success btn-sm"  type="submit">Restore !</button>
                         </form>
                     @endcan
                     @can('forceDelete', $post)
@@ -118,7 +118,7 @@
                             @csrf
                             {{-- PATCH pour faire une modification partiel --}}
                             @method('DELETE')
-                            <button class="btn btn-danger"  type="submit">Force delete !</button>
+                            <button class="btn btn-danger btn-sm"  type="submit">Force delete !</button>
                         </form>
                     @endcan
 

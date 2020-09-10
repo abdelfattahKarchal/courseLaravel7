@@ -18,7 +18,7 @@ class PostTagController extends Controller
         */
         $tag = Tag::find($id);
         return view('posts.index',[
-            'posts' => $tag->posts,
+            'posts' => $tag->posts()->withCount('comments')->with(['user','tags'])->get(),
            /*  'mostCommented'=> [],
             'mostUsersActive'=> [],
             'mostUsersActiveInLastMonth'=> [], */
