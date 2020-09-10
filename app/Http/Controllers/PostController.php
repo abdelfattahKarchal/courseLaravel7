@@ -43,7 +43,9 @@ class PostController extends Controller
 
        // $posts = Post::withCount('comments')->orderBy('updated_at','desc')->get();
        // scoped by orderBy
-        $posts = Post::withCount('comments')->with(['user','tags'])->get();
+       // $posts = Post::withCount('comments')->with(['user','tags'])->get();
+        // remplacé par le code soped de la méthode PostWithCommentsTags dans le model Post
+        $posts = Post::PostWithCommentsTags()->get();
 
         /**
          * gestion de cahe pour les posts les plus commentés
