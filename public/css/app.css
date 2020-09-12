@@ -7,7 +7,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
-:root {
+/* :root {
   --blue: #3490dc;
   --indigo: #6574cd;
   --purple: #9561e2;
@@ -10931,7 +10931,7 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
-}
+} */
 .badge a {
     color: white;
 }
