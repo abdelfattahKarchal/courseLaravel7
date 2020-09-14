@@ -138,6 +138,26 @@ class PostController extends Controller
     }
 
     public function store(StorePostRequest $request){
+
+    /**
+     * upload file
+     */
+        $hasFile = $request->hasFile('picture');
+        dump($hasFile);
+        if($hasFile){
+            $file = $request->file('picture');
+            dump($file);
+            dump($file->getClientMimeType());
+            dump($file->getClientOriginalExtension());
+            dump($file->getClientOriginalName());
+
+            // store file (default value difine in .env FILESYSTEME_DRIVE)
+            $file->store('thumbnails');
+        }
+
+    die();
+
+
        // $data = $request->only(['title','content']);
         $data = $request->validated();
 
