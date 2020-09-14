@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use League\CommonMark\Inline\Element\Strong;
 
 class PostController extends Controller
 {
@@ -151,8 +153,18 @@ class PostController extends Controller
             dump($file->getClientOriginalExtension());
             dump($file->getClientOriginalName());
 
-            // store file (default value difine in .env FILESYSTEME_DRIVE)
-            $file->store('thumbnails');
+            // store file (default value difine in .env FILESYSTEM_DRIVER)
+            dump($file->store('thumbnails'));
+            //Store file withe Storage Facade
+            dump(Storage::putFile('thumbnails',$file));
+
+            //Storage with specifing disk (local=> storage/app/)
+            dump(Storage::disk('local')->putFile('thumbnails',$file));
+
+            //Rename file with storeAs()
+            dump($file->storeAs('thumbnails', random_int(1,100). '.' .$file->guessClientExtension()));
+            //Rename file with Storage facade
+            dump(Storage::disk('local')->putFileAs('thumbnails', $file,random_int(1,100). '.' .$file->guessClientExtension()));
         }
 
     die();
