@@ -156,15 +156,33 @@ class PostController extends Controller
             // store file (default value difine in .env FILESYSTEM_DRIVER)
             dump($file->store('thumbnails'));
             //Store file withe Storage Facade
-            dump(Storage::putFile('thumbnails',$file));
+          // dump(Storage::putFile('thumbnails',$file));
 
             //Storage with specifing disk (local=> storage/app/)
-            dump(Storage::disk('local')->putFile('thumbnails',$file));
+            //dump(Storage::disk('local')->putFile('thumbnails',$file));
 
             //Rename file with storeAs()
-            dump($file->storeAs('thumbnails', random_int(1,100). '.' .$file->guessClientExtension()));
+           // dump($file->storeAs('thumbnails', random_int(1,100). '.' .$file->guessClientExtension()));
             //Rename file with Storage facade
-            dump(Storage::disk('local')->putFileAs('thumbnails', $file,random_int(1,100). '.' .$file->guessClientExtension()));
+            ///dump(Storage::disk('local')->putFileAs('thumbnails', $file,random_int(1,100). '.' .$file->guessClientExtension()));
+
+            //Rename file with storeAs()
+            $name1= $file->storeAs('thumbnails', random_int(1,100). '.' .$file->guessClientExtension());
+            //Rename file with Storage facade
+            $name2= Storage::disk('local')->putFileAs('thumbnails', $file,random_int(1,100). '.' .$file->guessClientExtension());
+            /**
+             * génère l url pour l'accéder depuis l'extérieur de l'application public car le disk est public
+             * Nb: le seul fichier accessible sur l'application depuis l'extérieur est le dossier public
+             * alors pour acceder au dossier /storage il faut créer un lien symbolique depuis le dossier public vers le dossier storage
+             * la commande pour créer le lien symbolique est : php artisan storage:link
+             *
+             */
+            dump(Storage::url($name1));
+            /**
+             * il faut mentionner que le fichier se trouve sur le disk local
+             * génère un url accessible juste en local car le disk mentionné est local
+             */
+            dump(Storage::disk('local')->url($name2));
         }
 
     die();
