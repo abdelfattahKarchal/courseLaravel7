@@ -207,6 +207,7 @@ class PostController extends Controller
             $image = new Image(['path' => $path]);
             // associat post with his image
             $post->image()->save($image);
+
         }
 
         $request->session()->flash('status', 'post was created !');
