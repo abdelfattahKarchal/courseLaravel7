@@ -38,6 +38,17 @@
                 old
             </x-badge>
         @endif
+
+        {{-- n est pas professionnel --}}
+        {{-- <img src="http://localhost:8000/storage/{{$post->image->path ?? null}}" class="mt-3 img-fluid rounded" alt=""> --}}
+         {{-- c'est une méthode professionnel --}}
+        {{-- <img src="{{Storage::url($post->image->path ?? null) }}" class="mt-3 img-fluid rounded" alt=""> --}}
+        {{-- la meilleur pratique --}}
+        @if ($post->image)
+            <img src="{{$post->image->url()}}" class="mt-3 img-fluid rounded" alt="">
+        @endif
+
+
         <h2>
             <a href=" {{route('posts.show',['post'=>$post->id])}} ">
                 @if($post->trashed())
