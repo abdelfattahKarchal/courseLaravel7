@@ -74,11 +74,12 @@
                 </div>
             </div>
         </nav>
-        @if (session()->has('status'))
+      {{--   @if (session()->has('status'))
         <h3 style="color: green">
             {{session()->get('status')}}
         </h3>
-        @endif
+        @endif --}}
+        <x-alert></x-alert>
         <main class="py-4">
             <div class="container">
                   @yield('content')
