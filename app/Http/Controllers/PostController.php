@@ -249,7 +249,8 @@ class PostController extends Controller
                 $post->image->path = $path;
                 $post->image->save();
             }else{
-                $post->image()->save(new Image(['path'=>$path]));
+                //$post->image()->save(new Image(['path'=>$path]));
+                $post->image()->save(Image::make(['path'=>$path]));
             }
         }
 
