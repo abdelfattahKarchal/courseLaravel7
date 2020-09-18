@@ -5,6 +5,9 @@
 <div class="row">
     <div class= "col-8">
         <h1>{{$post->title}}</h1>
+        @if ($post->image)
+            <img src="{{$post->image->url()}}" class="mt-3 img-fluid rounded" alt="">
+        @endif
         <p>{{$post->content}}</p>
 
         <x-tags :tags="$post->tags"></x-tags>

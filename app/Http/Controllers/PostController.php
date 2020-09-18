@@ -238,6 +238,21 @@ class PostController extends Controller
         // $this->authorize("post.update",$post);
         $this->authorize("update", $post);
 
+        /**
+         * update image
+         */
+        if ($request->hasFile('picture')) {
+            $path = $request->file('picture')->store('posts');
+            // if this post already have an image
+            if($post->image){
+                Storage::delete($post->image->path);
+                $post->image->path = $path;
+                $post->image->save();
+            }else{
+                $post->image()->save(new Image(['path'=>$path]));
+            }
+        }
+
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->slug = Str::slug($request->input('title'), '-');
