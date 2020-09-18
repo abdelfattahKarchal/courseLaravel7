@@ -74,4 +74,11 @@ class Post extends Model
         return $this->belongsToMany('App\Tag')->withTimestamps();
     }
 
+    /**
+     * one to one relation one post have one image
+     */
+    public function image(){
+        return $this->hasOne(Image::class);
+    }
+
 }
